@@ -4,33 +4,33 @@ public class Main {
 
     public static void main(String[] args) {
 
-        FileInputStream input = null;
+
+        File file1 = new File("babynames/baby1990.html");
+
+
+        extractNames(file1);
+
+
+
+    }
+
+    static void extractNames(File filename)
+    {
         BufferedReader in = null;
-        File sourceFile = new File("babynames/baby1990.html");
-        try {
-            in = new BufferedReader(new FileReader(sourceFile));
+
+        try
+        {
+            in = new BufferedReader(new FileReader(filename));
             String line;
-            while ((line = in.readLine()) != null) { // -1 means end of the File
-                String [] garray = line.split("<td>|</td>");
-
-                for(int i = 1; i < garray.length; i+=2){
-                    try{
-                        Integer.parseInt(garray[i]);
-                        System.out.println(garray[i]);
-                        System.out.println(garray[i+2]);
-                        System.out.println(garray[i+4]);
-
-                    }catch (Exception e)
-                    {
-                    }
-                }
+            while((line = in.readLine()) != null)
+            {
+                System.out.println(line);
             }
+        }
+        catch(Exception e)
+        {
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
+        }finally {
             if (in != null) {
                 try {
                     in.close();
@@ -39,8 +39,7 @@ public class Main {
                 }
             }
         }
-
     }
-
-
 }
+
+
