@@ -25,6 +25,10 @@ public class Main {
             while((line = in.readLine()) != null)
             {
                 System.out.println(line);
+                if(line.matches("(\\d\\d\\d\\d)"))
+                {
+                    System.out.println(line);
+                }
             }
         }
         catch(Exception e)
