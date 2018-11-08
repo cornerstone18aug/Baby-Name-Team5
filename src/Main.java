@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,30 +7,12 @@ public class Main {
 
     public static void main(String[] args) {
 
+        for (String i: args) {
+            File file = new File(i);
+            extractNames(file);
+        }
 
         File file1 = new File("babynames/baby1990.html");
-//        File file2 = new File("babynames/baby1992.html");
-//        File file3 = new File("babynames/baby1994.html");
-//        File file4 = new File("babynames/baby1996.html");
-//        File file5 = new File("babynames/baby1998.html");
-//        File file6 = new File("babynames/baby2000.html");
-//        File file7 = new File("babynames/baby2002.html");
-//        File file8 = new File("babynames/baby2004.html");
-//        File file9 = new File("babynames/baby2006.html");
-//        File file10 = new File("babynames/baby2008.html");
-
-
-        extractNames(file1);
-//        extractNames(file2);
-//        extractNames(file3);
-//        extractNames(file4);
-//        extractNames(file5);
-//        extractNames(file6);
-//        extractNames(file7);
-//        extractNames(file8);
-//        extractNames(file9);
-//        extractNames(file10);
-
 
 
     }
@@ -49,10 +28,12 @@ public class Main {
         HashMap<String, String> map = new HashMap<>();
         HashMap<String, String> mapfemalename = new HashMap<>();
         ArrayList<String> names = new ArrayList<>();
+        BufferedWriter out = null;
 
         try
         {
             in = new BufferedReader(new FileReader(filename));
+            out = new BufferedWriter(new FileWriter(filename+ ".summary"));
             String line;
             while((line = in.readLine()) != null)
             {
@@ -64,8 +45,7 @@ public class Main {
 
                 while (matcherYear.find()) {
                     year = matcherYear.group(1).replaceAll("¥¥s", "");
-                    System.out.println(year);
-
+                    out.write(year);
                 }
 
                 while (matcherRank.find()) {
@@ -92,7 +72,7 @@ public class Main {
             {
                 if(map.containsKey(i))
                 {
-                    System.out.println(i + " " + map.get(i));
+                    out.write("\n"+ i + " " + map.get(i));
                 }
             }
         }
@@ -107,6 +87,14 @@ public class Main {
                     e.printStackTrace();
                 }
             }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
     }
 }
